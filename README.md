@@ -38,21 +38,6 @@ Or open in CLion — it reads `CMakeLists.txt` automatically.
 
 ## Example output
 
-```
-=== SENSOR NETWORK SIMULATION ===
-Run 50 timesteps...
+![Sensor Monitoring Output](screenshots/sensor_output.png)
 
-  [ALERT] Step   7 | MCU_Temp             | 96.84    | OVER MAX (95C)
-  [ALERT] Step  19 | CoolantPressure      | 947.12   | UNDER MIN (950hPa)
-  [ALERT] Step  34 | PowerStage           | 111.20   | OVER MAX (110C)
-
-=== STATISTICI ===
-Senzor                Citiri    Medie     Min       Max       Limite
-------------------------------------------------------------------------
-MCU_Temp              50        70.34     62.11     97.23     [20 - 95 C]
-PowerStage            50        85.12     76.45     111.20    [25 - 110 C]
-CoolantPressure       50        1013.45   947.12    1078.90   [950 - 1080 hPa]
-VCC_3V3               50        3.30      3.05      3.58      [3 - 3.6 V]
-
-Total defecte detectate: 3
-```
+Statistics after 50 timesteps: each sensor reports its average, min and max readings with the configured safety thresholds. Faults are logged in the alert summary when a reading falls outside the thresholds.
