@@ -1,43 +1,40 @@
-# Sensor Monitoring & Fault Detection System
+# Sensor Monitoring System
 
-Embedded-style simulation of a sensor network on a control board. Reads multiple sensors (temperature, pressure, voltage), logs the data, and triggers fault alerts when readings exceed safety thresholds.
+Simulare in C++17 a unui sistem cu mai multi senzori. Genereaza citiri cu zgomot aleator si detecteaza cand valorile ies din limite.
 
-Built in **C++17** to practice core OOP concepts: abstraction, polymorphism, encapsulation and composition.
+## Senzorii simulati
 
-## What it simulates
-
-A control board (think automotive inverter or industrial controller) with 4 sensors:
-
-| Sensor | Normal | Faulty if |
+| Senzor | Valoare normala | Alerta daca |
 |---|---|---|
-| MCU temperature | 70 °C | < 20 or > 95 |
-| Power stage temperature | 85 °C | < 25 or > 110 |
-| Coolant pressure | 1013 hPa | < 950 or > 1080 |
-| VCC 3.3V rail | 3.3 V | < 3.0 or > 3.6 |
+| MCU temperature | 70 C | < 20 sau > 95 |
+| Power stage temp | 85 C | < 25 sau > 110 |
+| Coolant pressure | 1013 hPa | < 950 sau > 1080 |
+| VCC 3.3V | 3.3 V | < 3.0 sau > 3.6 |
 
-Each sensor produces a realistic reading (base value + random noise). The system runs for 50 timesteps, logs everything, and reports any fault detected during the run.
+Programul ruleaza 50 timesteps, logheaza fiecare citire si raporteaza alertele.
 
-## OOP concepts demonstrated
+## Design OOP
 
-- **Abstraction** — `Sensor` is an abstract base class with pure virtual `read()` and `getUnit()`
-- **Polymorphism** — `SensorNetwork` holds `Sensor*` pointers and calls `read()` uniformly across derived types
-- **Inheritance** — `TemperatureSensor`, `PressureSensor`, `VoltageMonitor` extend `Sensor`
-- **Encapsulation** — `DataLogger` and `AlertSystem` hide internal state behind methods
-- **Composition** — `SensorNetwork` contains `DataLogger`s and an `AlertSystem` (has-a, not is-a)
+- `Sensor` clasa abstracta cu `read()` si `getUnit()`
+- `TemperatureSensor`, `PressureSensor`, `VoltageMonitor` derivate
+- `DataLogger` tine istoricul citirilor
+- `AlertSystem` tine evidenta defectelor
+- `SensorNetwork` contine totul, ruleaza simularea
 
 ## Build & run
 
-```bash
-mkdir build && cd build
+```
+mkdir build
+cd build
 cmake ..
 cmake --build .
 ./SensorMonitoring
 ```
 
-Or open in CLion — it reads `CMakeLists.txt` automatically.
+Sau direct in CLion.
 
-## Example output
+## Output
 
-![Sensor Monitoring Output](screenshots/sensor_output.png)
+![Output](screenshots/sensor_output.png)
 
-Statistics after 50 timesteps: each sensor reports its average, min and max readings with the configured safety thresholds. Faults are logged in the alert summary when a reading falls outside the thresholds.
+Statistici dupa 50 timesteps si lista alertelor detectate.
